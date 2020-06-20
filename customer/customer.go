@@ -1,7 +1,6 @@
 package customer
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -24,9 +23,13 @@ func SetupRouter() *gin.Engine {
 }
 
 func authMiddleWare(c *gin.Context) {
-	fmt.Println("start middleware")
+	token := c.GetHeader("Authorization")
+
+	if token != "token2019" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "unauthorized"})
+		c.Abort()
+		return
+	}
 
 	c.Next()
-
-	fmt.Println("end middleware")
 }
