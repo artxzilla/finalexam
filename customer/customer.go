@@ -12,7 +12,6 @@ func SetupRouter() *gin.Engine {
 
 	r.Use(authMiddleWare)
 
-	r.GET("/test", testHandler)
 	r.POST("/customers", createCustomerHandler)
 	r.GET("/customers/:id", getCustomerByIDHandler)
 	r.GET("/customers", getAllCustomerHandler)
@@ -32,12 +31,6 @@ func authMiddleWare(c *gin.Context) {
 	}
 
 	c.Next()
-}
-
-func testHandler(c *gin.Context) {
-	cus := &Customer{}
-
-	c.JSON(http.StatusOK, cus)
 }
 
 func createCustomerHandler(c *gin.Context) {
