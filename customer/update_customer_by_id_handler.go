@@ -16,11 +16,11 @@ func updateCustomerByIDHandler(c *gin.Context) {
 		return
 	}
 
-	existedCustomer := stmt.QueryRow(id)
+	existingCustomer := stmt.QueryRow(id)
 
 	customer := &Customer{}
 
-	err = existedCustomer.Scan(&customer.ID, &customer.Name, &customer.Email, &customer.Status)
+	err = existingCustomer.Scan(&customer.ID, &customer.Name, &customer.Email, &customer.Status)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 		return

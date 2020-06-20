@@ -16,15 +16,15 @@ func getCustomerByIDHandler(c *gin.Context) {
 		return
 	}
 
-	res := stmt.QueryRow(id)
+	result := stmt.QueryRow(id)
 
-	cus := &Customer{}
+	customer := &Customer{}
 
-	err = res.Scan(&cus.ID, &cus.Name, &cus.Email, &cus.Status)
+	err = result.Scan(&customer.ID, &customer.Name, &customer.Email, &customer.Status)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
 
-	c.JSON(http.StatusOK, cus)
+	c.JSON(http.StatusOK, customer)
 }
