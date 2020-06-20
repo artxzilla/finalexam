@@ -14,6 +14,7 @@ func SetupRouter() *gin.Engine {
 
 	r.GET("/test", testHandler)
 	r.POST("/customers", createCustomerHandler)
+	r.GET("/customers/:id", getCustomerByIDHandler)
 
 	return r
 }
@@ -52,4 +53,26 @@ func createCustomerHandler(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, cus)
+}
+
+func getCustomerByIDHandler(c *gin.Context) {
+	id := c.Param("id")
+
+	stmt, err := database.GetInstance().Prepare("SELECT id, name, email, status FROM customers where id=$1")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	res := stmt.QueryRow(id)
+
+	cus := &Customer{}
+
+	err = res.Scan(&cus.ID, &cus.Name, &cus.Email, &cus.Status)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, cus)
 }
