@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"os"
 
@@ -18,21 +17,24 @@ func init() {
 		log.Fatal(err)
 	}
 
-	createTb := `CREATE TABLE IF NOT EXISTS customers (
+	createTableCustomer()
+}
+
+func GetInstance() *sql.DB {
+	return db
+}
+
+func createTableCustomer() {
+	stmt := `CREATE TABLE IF NOT EXISTS customers (
 		id SERIAL PRIMARY KEY,
 		name TEXT,
 		email TEXT,
 		status TEXT
 	);`
 
-	_, err = db.Exec(createTb)
+	_, err := db.Exec(stmt)
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("create table success")
-}
-
-func GetInstance() *sql.DB {
-	return db
 }
