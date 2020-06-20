@@ -7,7 +7,7 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	r.Use(authMiddleWare)
+	r.Use(authMiddleware)
 
 	r.POST("/customers", createCustomerHandler)
 	r.GET("/customers/:id", getCustomerByIDHandler)

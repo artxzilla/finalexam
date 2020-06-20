@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func authMiddleWare(c *gin.Context) {
+func authMiddleware(c *gin.Context) {
 	token := c.GetHeader("Authorization")
 
 	if token != "token2019" {
